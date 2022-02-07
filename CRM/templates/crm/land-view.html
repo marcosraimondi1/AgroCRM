@@ -1,0 +1,64 @@
+<div id="land-view">
+    <div class="container">
+        <div class="row" id="land-wrapper">
+            <div class="card col-3">
+                <div class="card-body">
+                    <h3 class="card-title">General Information</h3>
+                    <h5 class="card-title" id="title">Title</h5>
+                    <p class="card-text" id="description">Description</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle">Landlord: <span class="info" id="landlord"></span> </h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle">Tenant: <span class="info" id="tenant"></span> </h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle">Location: <span class="info" id="location"></span> </h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle">Hectares: <span class="info" id="hectares"></span></h6>
+                        </li>
+                        <!-- <a class="card-link" id="contract" href="#">Download Contract</a> -->
+
+                    </ul>
+                </div>
+                <a id="map" href="">Google Maps</a>
+            </div>
+            <div class="card col-3" id="weather-card">
+                <div class="card-body">
+                    <h3 class="card-title">Weather</h3>
+                    <div id="weather" style="zoom: 150%;"></div>
+                </div>
+            </div>
+            <div class="card col-3">
+                <div class="card-body">
+                    <h3 class="card-title">Billing Information</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div>
+                                <h6>Status: <span id="status" class="badge badge-pill"></span></h6>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Method: <span class="info" id="method"></span></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Initial Amount: $<span class="info" id="amount"></span></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Payed: $<span class="info" id="payed"></span></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Pending: $<span class="info" id="pending"></span></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Deadline: <span class="info" id="deadline"></span></h6>
+                        </li>
+                        <a class="card-link" href="{% url 'billing' %}">Go to billing</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

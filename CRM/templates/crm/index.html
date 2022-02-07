@@ -1,0 +1,55 @@
+{% extends "crm/layout.html" %}
+{% load static %}
+{% load customTags %}
+
+{% block body %}
+
+<div id="lands-view" class="container">
+    <div class="row" style="margin: auto;">
+        {%for land in lands %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{land.title}}</h5>
+                    <ul class="list-group list-group-flush">
+                        {% if user.is_landlord %}
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle">Tenant: {{land.tenant.tenant.username}}</h6>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle">Landlord: {{land.landlord.username}}</h6>
+                        </li>
+                        {% endif %}
+                        <li class="list-group-item">
+                            <h6 class="card-subtitle">Billing Status: {% statusPill land.billing %}</h6>
+                        </li>
+                    </ul>
+                    <p class="card-text">{{land.location}}</p>
+                    <a class="card-link see" data-id={{land.id}}>See</a>
+                    {% if user.is_landlord %}
+                    <a class="card-link" href="{% url 'editLand' land.id %}">Edit</a>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+        {%empty%}
+        <h6>No lands to see</h6>
+        {% endfor %}
+    </div>
+
+    {% include 'crm/pagination.html' %}
+
+    {% block script %}
+    <script>
+        let terrain_url = "{% url 'land' 0 %}".slice(0, -1);
+        const APIkey = "{{ API_KEY }}";
+    </script>
+    <script src="{% static 'crm/index.js' %}"></script>
+
+    {% endblock %}
+</div>
+
+{% include 'crm/land-view.html' %}
+
+{% endblock %}

@@ -1,0 +1,171 @@
+html , body {
+    height: 100%;
+}
+
+body {
+    background-image: url('app-background.jpg');
+}
+
+.nav {
+    background-color:#e0e0e0ab ;
+}
+
+
+a:hover{
+    cursor: pointer;
+    color:tomato
+}
+
+.card {
+    width: 18rem; 
+    margin:auto; 
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.form-wrapper > input {
+    display: flex;
+    align-self: center;
+    margin:auto;
+    width: fit-content;
+}
+
+.forms-wrapper {
+    margin:auto;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    background-color: #e0e0e0ab ;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+#saveButton {
+    margin:auto;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+#bills-wrapper {
+    margin: 20px;
+}
+
+.bill-content-wrapper  {
+    display: flex;
+    justify-content: space-between ;
+    margin: 1px;
+    padding: 7px;
+    cursor: pointer;
+}
+
+@keyframes dropdown {
+    0% {
+        opacity: 0;
+        height: 0px;
+        padding: 0px;
+        border: 2px solid #ff000077;
+        background-color:#0059ff21;
+    }
+    100% {
+        opacity: 1;
+        height: 174px;
+        padding: 5px;
+        padding-bottom: 5px;
+        border: 2px solid #6d6d6d77;
+        background-color:#6494ed21;
+    }
+  }
+
+.bill-dropdown {
+    
+    animation-name: dropdown;
+    animation-duration: 1s;
+    animation-fill-mode: none;
+    animation-play-state: 'paused';
+    
+    height: fit-content;
+    padding: 5px;
+    padding-bottom: 5px;
+    border: 2px solid #6d6d6d77;
+    background-color:#6494ed21;
+    padding-bottom: 5px;
+}
+
+@keyframes slide {
+    from {
+      margin-left:100%;
+      width: 100%;
+    }
+  
+    to {
+      width: 100%;
+      margin-left:0%;
+    }
+  }
+
+  #land-view {
+      animation-name: slide;
+      animation-duration: 1s;
+      animation-play-state: paused;
+      animation-iteration-count: 1;
+  }
+
+  #land-wrapper {
+      display: flex;
+      justify-content: space-between;
+      margin: auto;
+  }
+
+  #weather-card {
+      width: fit-content;
+  }
+
+  .info {
+      font-weight: normal;
+  }
+
+  @keyframes fade {
+      0% {
+        height: 0px;
+        opacity: 0;
+      }
+      75% {
+          opacity: 0.5;
+      }
+      100% {
+        height: 135px;
+        opacity: 1;
+        margin: 3px;
+        padding: 3px;
+      }
+  }
+
+  .small-form {
+      width: 150px;
+      height: 135px;
+      margin: 3px;
+      padding: 3px;
+      animation-name: fade;
+      animation-duration: 1s;
+      animation-fill-mode: none;
+      animation-play-state: paused;
+  }
+
+  .small-form > input {
+    margin-bottom: 5px;
+  }
+
+  i:hover {
+    cursor: pointer;
+  }
+  
+  i {
+      margin: 2px;
+      float: right;
+  }

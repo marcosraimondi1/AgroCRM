@@ -1,0 +1,45 @@
+{% extends "crm/layout.html" %}
+
+{% block body %}
+<div class="container">
+
+    <h2>Register</h2>
+
+    {% if message %}
+    <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" name="username" placeholder="Username">
+        </div>
+        <br>
+        <div class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="Email Address">
+        </div>
+        <br>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <br>
+        <div class="form-group">
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+        </div>
+        <br>
+        <div class="form-group">
+            <input type="checkbox" id="islandlord" name="islandlord">
+            <label for="islandlord" style="color: #002333; font-weight: 500; background-color: #ffe4c44b;">Landlord
+                account?</label>
+        </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Register">
+    </form>
+    <div
+        style="color: #002333; font-weight: 500; background-color: #c0ce4580; width: fit-content; padding: 3px; border-radius: 20px;">
+        Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    </div>
+
+</div>
+
+{% endblock %}

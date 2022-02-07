@@ -1,0 +1,31 @@
+{% extends "crm/layout.html" %}
+
+{% block body %}
+<div class="container">
+    <h1 style="text-align: center ;">Welcome to Agro C.R.M.</h1>
+    <h4 style="text-align: center; color: #474747;">Stay informed with the latest updates</h4>
+    <h2>Login</h2>
+
+    {% if message %}
+    <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" name="username" placeholder="Username">
+        </div>
+        <br>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Login" style="margin-right: 5px;">
+        <div
+            style="color: #002333; font-weight: 500; background-color: #c4deff80; width: fit-content; border-radius: 20px; padding: 2px;">
+            Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

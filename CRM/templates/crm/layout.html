@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> AGRO CRM </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="LbZjxNhDZssqn-j_cvddiPvDrWLdnjwtTR9xs0O8STU" />
+    <!-- ICONS LINKS  -->
+    <script src="https://kit.fontawesome.com/1a31b87bd8.js" crossorigin="anonymous"></script>
+
+    <!-- BOOTSTRAPP LINKS  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+
+    <!-- MY STYLESHEET  -->
+    <link rel="stylesheet" href="{% static 'crm\styles.css' %}">
+    {%block script%}
+    {%endblock%}
+</head>
+
+<body>
+    {%if request.user.is_authenticated %}
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <p class="nav-link active">Signed in as <strong>{{user.username}}</strong></p>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+    </ul>
+
+    <ul class="nav justify-content-center">
+        {%if user.is_landlord %}
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">My Lands</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'newLand' %}">New Land</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">My Rents</a>
+        </li>
+        {%endif%}
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'billing' %}">Billing</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile" href="profile">Profile</a>
+        </li>
+
+    </ul>
+    {%endif%}
+    {%block body%}
+    {%endblock%}
+</body>
+
+</html>

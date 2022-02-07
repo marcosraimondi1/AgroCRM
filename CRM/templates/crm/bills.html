@@ -1,0 +1,38 @@
+{% extends 'crm/layout.html' %}
+
+{% load static %}
+{% load customTags %}
+
+{% block body %}
+<div id="bills-wrapper" style="padding-bottom: 60px;">
+    <ul class="list-group list-group-flush" style="padding-bottom: 30px; margin-bottom: 30;">
+        {% for bill in bills%}
+        <li class="list-group-item {% style bill %}">
+            <div id={{bill.id}} class="bill-content-wrapper">
+                <h6 class="dropdown-toggle">{{bill.land.title}} for ${{bill.amount}}</h6>
+                <small>
+                    By {{bill.period}}
+                </small>
+            </div>
+
+            <div id="bill-dropdown-{{bill.id}}" class="bill-dropdown">
+                {% if user.is_landlord %}
+                <p>Tenant: {{bill.land.tenant.tenant.username}}</p>
+                {%else%}
+                <p>Landlord: {{bill.land.landlord.username}}</p>
+                {%endif%}
+                <p>Method: {{bill.method}}</p>
+                <p>Payed: ${{bill.payed}}</p>
+                <p>Pending: ${{bill.owed}}</p>
+            </div>
+        </li>
+        {% empty %}
+        <li class="list-group-item">NO BILLS!</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'crm/bills.js' %}"></script>
+{% endblock %}

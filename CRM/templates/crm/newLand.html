@@ -1,0 +1,69 @@
+{% extends 'crm/layout.html' %}
+{% load static %}
+
+{% block body %}
+<form class="container" action="{% url 'newLand' %}" method="POST" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="forms-wrapper row">
+        <div class="form-wrapper col-sm">
+            <h3>Land Information</h3>
+            <div>
+                <div>
+                    <ul>
+                        {{land_form.as_ul}}
+                    </ul>
+                </div>
+                {% if editing %}
+                <input type="hidden" name="editing" value="yes">
+                <input type="hidden" name="land_id" value={{land.id}}>
+                <input type="hidden" name="billing_id" value={{billing.id}}>
+
+
+                <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 5">
+                    <div id="warningToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">Warning!</strong>
+                            <button id="dismiss" type="button" class="btn-close"></button>
+                        </div>
+                        <div class="toast-body">
+                            You are about to PERMANENTLY delete this land with all its information.
+                            This is an irreversible action.
+                        </div>
+                        <button id="delete" type="button" class="btn-sm btn-danger"
+                            style="margin-left: 3px; margin-bottom: 3px;">Delete</button>
+                    </div>
+                </div>
+                {%endif%}
+            </div>
+        </div>
+
+        <div class="form-wrapper col-sm ">
+            <h3>Billing</h3>
+            <div>
+                <ul>
+                    {{billing_form.as_ul}}
+                </ul>
+            </div>
+            <input id="saveButton" type="submit" class="btn btn-primary" value="Save">
+            {% if editing %}
+            <input id="deleteButton" type="button" class="btn btn-danger" value="Delete">
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+
+
+{% endblock %}
+
+
+{% block script %}
+{% if editing %}
+<script>
+    const url = "{% url 'land' land.id %}"
+    const index = "{% url 'index' %}"
+    const id = {{ land.id }}
+</script>
+{%endif%}
+<script src="{% static 'crm/newLand.js' %}"></script>
+{% endblock %}

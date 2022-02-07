@@ -1,0 +1,131 @@
+{% extends 'crm/layout.html' %}
+{% load static %}
+
+{% block body %}
+<div id="profile-view">
+    <div class="container">
+        <div class="row" id="land-wrapper">
+            <div class="card col-3">
+                <div class="card-body">
+                    <h3 class="card-title">Personal Information</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h6>Username: <span class="info" id="username">{{user.username}}</span></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Id: <span class="info" id="id">{{user.id}}</span></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Email: <span class="info" id="email">{{user.email}}</span></h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card col-3">
+                <div class="card-body">
+                    <h3 class="card-title">Associates</h3>
+                    {%if user.is_landlord %}
+                    <ul class="list-group list-group-flush">
+                        {% for tenant in partners %}
+                        <li class="list-group-item">
+                            <h6>
+                                {{tenant.tenant.username}} - Id: {{tenant.tenant.id}}
+                            </h6>
+                            <small style="font-weight: normal; float: center;">{{tenant.tenant.email}}</small>
+                        </li>
+                        {%empty%}
+                        <li class="list-group-item">
+                            No Tenants
+                        </li>
+                        {% endfor %}
+                        <a id="addUser" class="card-link" href="#">Add Tenant</a>
+                    </ul>
+                    {% else %}
+                    <ul class="list-group list-group-flush">
+                        {% for landlord in partners %}
+                        <li class="list-group-item">
+                            <h6>
+                                {{landlord.username}} - Id: {{landlord.id}}
+                            </h6>
+                            <small style="font-weight: normal; float: center;">{{landlord.email}}</small>
+                        </li>
+                        {%empty%}
+                        <li class="list-group-item">
+                            No Landlords
+                        </li>
+                        {% endfor %}
+                        <a id="addUser" class="card-link" href="#">Add Landlord</a>
+                    </ul>
+                    {%endif%}
+                    <form id="addForm" style="display: none;" action="{% url 'messages' %}"
+                        class="form-control small-form" method="POST">
+                        {%csrf_token%}
+                        <input type="hidden" name="adduser" value="True">
+                        <input name="receiver" id="addForm-id" type="number" class="form-control" placeholder="User id">
+                        <input name="message" id="addForm-m" type="text" class="form-control" placeholder="Message">
+                        <input type="submit" value="Send Request" class="btn btn-primary">
+                    </form>
+
+                </div>
+            </div>
+            <div class="card col-3">
+                <div class="card-body">
+                    <h3 class="card-title">Messages
+                        <i id="new-message" class="far fa-plus-square"></i>
+                    </h3>
+                    <form id="message-form" action="{% url 'messages' %}" style="display: none;" method="POST"
+                        class="form-control small-form">
+                        {%csrf_token%}
+                        <input id="message-form-id" type="number" class="form-control" name="receiver"
+                            placeholder="User id">
+                        <input id="message-form-m" type="text" class="form-control" name="message"
+                            placeholder="Message">
+                        <input type="submit" value="Send" class="btn btn-primary">
+                    </form>
+                    <ul class="list-group list-group-flush">
+                        Messages:
+                        {% for message in messages %}
+                        <li class="list-group-item">
+                            <p>
+                                From: {{message.sender.username}}
+                                {{message.message}}
+                                <i class="fas fa-trash-alt delete-request" data-id={{message.id}}></i>
+                            </p>
+                            <small>{{message.timestamp}}</small>
+                        </li>
+                        {%empty%}
+                        <li class="list-group-item">
+                            No messages
+                        </li>
+                        {%endfor%}
+                        Requests:
+                        {% for request in requests %}
+                        <li class="list-group-item">
+                            <p>
+                                From: {{request.sender.username}}
+                                {{request.message}}
+                                <i class="fas fa-check-circle accept-request" data-id={{request.id}}></i>
+                                <i class="fas fa-trash-alt delete-request" data-id={{request.id}}></i>
+                            </p>
+                            <small>{{request.timestamp}}</small>
+                        </li>
+                        {%empty%}
+                        <li class="list-group-item">
+                            No messages
+                        </li>
+                        {%endfor%}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script src="{% static 'crm/profile.js' %}"></script>
+<script>
+    const message_url = "{% url 'profile' %}";
+</script>
+{%endblock%}
