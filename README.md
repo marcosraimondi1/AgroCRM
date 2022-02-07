@@ -116,6 +116,7 @@ Also for using the weather api you have to first register in the page and get an
 
 ### Executing the app
 
+Run `python manage.py runserver` or visit:  [AGRO CRM APP](#https://agro-crm-project.herokuapp.com)
 When running the app this is how it is meant to be used:
 
 * Register (register as a landlord using the checkbox)
