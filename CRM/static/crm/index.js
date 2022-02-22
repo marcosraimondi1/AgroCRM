@@ -23,6 +23,10 @@ function load_land(land_id) {
             document.querySelector('#hectares').innerHTML = `${land.hectares} ha`;
             document.querySelector('#map').href = land.map;
 
+            // Add Weather Html
+            let parser = new DOMParser();
+            document.querySelector("#weather").innerHTML = parser.parseFromString(html, land.html)
+
             // BILLING INFORMATION
             document.querySelector('#method').innerHTML = land.billing.method;
             document.querySelector('#amount').innerHTML = land.billing.amount;
@@ -49,15 +53,15 @@ function load_land(land_id) {
             document.querySelector('#land-view').style.animationPlayState = "running";
 
             // Weather API fetch
-            const lat = land.coord.lat
-            const lon = land.coord.long
+            // const lat = land.coord.lat
+            // const lon = land.coord.long
 
-            fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}&mode=html`)
-                .then(res => res.text())
-                .then(res => {
-                    document.querySelector('#weather').innerHTML = res;
-                })
-                .catch(err => console.log(err))
+            // fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}&mode=html`)
+            //     .then(res => res.text())
+            //     .then(res => {
+            //         document.querySelector('#weather').innerHTML = res;
+            //     })
+            //     .catch(err => console.log(err))
 
 
         })

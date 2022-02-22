@@ -4,6 +4,9 @@ html , body {
 
 body {
     background-image: url('app-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .nav {

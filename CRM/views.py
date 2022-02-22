@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
+import requests  # for fetching apis
+from django.utils.safestring import mark_safe # for marking html safe
 import json
 
 from .models import User, Land, TenantProfile, Billing, Message
@@ -254,8 +256,26 @@ def land(request, land_id):
         except Exception as ex:
             print(ex)
             return JsonResponse({"error": f"Land with id {land_id} not found"}, status=404)
-        # get land data
+
+        # Weather API fetch
+        lat = land.lat
+        lon = land.long
+
+        response = requests.get(
+            f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&mode=html")
+
+        html = "<div>Failed to get Information</div>"
+        try:
+            if response.status_code == 200:
+                html = response.content
+
+        except Exception as ex:
+            print(ex)
+
+        # Serialize land data and add html from weather api
         data = land.serialize()
+        data["html"] = mark_safe(html)
+        
         return JsonResponse(data)
 
     elif request.method == 'PUT':
