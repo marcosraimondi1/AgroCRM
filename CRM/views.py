@@ -8,8 +8,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
 import requests  # for fetching apis
-from django.utils.safestring import mark_safe  # for marking html safe
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # for parsing html response
 import json
 
 from .models import User, Land, TenantProfile, Billing, Message
