@@ -8,7 +8,8 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
 import requests  # for fetching apis
-from django.utils.safestring import mark_safe # for marking html safe
+from django.utils.safestring import mark_safe  # for marking html safe
+from bs4 import BeautifulSoup
 import json
 
 from .models import User, Land, TenantProfile, Billing, Message
@@ -257,26 +258,34 @@ def land(request, land_id):
             print(ex)
             return JsonResponse({"error": f"Land with id {land_id} not found"}, status=404)
 
-        # Weather API fetch
-        lat = land.lat
-        lon = land.long
-
-        response = requests.get(
-            f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&mode=html")
-
-        html = "<div>Failed to get Information</div>"
         try:
+
+            # Weather API fetch
+            lat = land.lat
+            lon = land.long
+
+            response = requests.get(
+                f"http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_KEY}&mode=html")
+
+            html = ""
+
             if response.status_code == 200:
-                html = response.content
+                html = BeautifulSoup(response.content, "html.parser")
+            else:
+                html = "Not Found"
 
         except Exception as ex:
-            print(ex)
+            return JsonResponse(land.serialize())
 
         # Serialize land data and add html from weather api
         data = land.serialize()
-        data["html"] = mark_safe(html)
-        
-        return JsonResponse(data)
+        data["html"] = str(html)
+
+        try:
+            res = JsonResponse(data)
+        except Exception as ex:
+            return JsonResponse({"error": f"Land with id {land_id} not found"}, status=404)
+        return res
 
     elif request.method == 'PUT':
         # receive information
